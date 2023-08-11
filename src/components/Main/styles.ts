@@ -29,7 +29,7 @@ export const photoPerfil = styled.Image`
   width: 110px;
   height: 110px;
 
-  border-radius: 100%;
+  /* border-radius: 100%; */
 `
 
 export const contentBio = styled.View``
