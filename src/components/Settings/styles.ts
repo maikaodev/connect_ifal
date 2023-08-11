@@ -29,7 +29,7 @@ export const ModalContainer = styled.View`
   flex: 1;
   background-color: #fff;
 
-  border-radius: 8px;
+  border-radius: 8px 8px 0 0;
 
   padding: 16px;
 `;
@@ -52,4 +52,18 @@ export const FormGroup = styled.View`
 export const Label = styled.Text`
   font-size: 16px;
   margin-bottom: 8px;
+`;
+
+export const CloseButton = styled.TouchableOpacity`
+  background-color: #ce4848;
+
+  align-items: center;
+  justify-content: center;
+`;
+
+export const CloseButtonText = styled.Text`
+  font-size: 20px;
+  Font-weight: bold;
+  margin-bottom: 8px;
+  color: #fff;
 `;

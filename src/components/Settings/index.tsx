@@ -19,16 +19,16 @@ export const Settings = ({ handleChangeTheme, currentTheme = 'dark', hasUserPhot
   return <S.Container>
     <S.Divider/>
     <S.Settings>
-      <S.Title>Configurações</S.Title>
+      <S.Title style={[currentTheme === 'dark' && { color: '#fff' }]}>Configurações</S.Title>
       <S.SettingAction onPress={() => setModalIsOpen(true)}>
         <Ionicons
           name='ios-settings'
           size={24}
-          color='#000'
+          color={currentTheme === 'dark' ? '#fff' : "#000"}
         />
       </S.SettingAction>
     </S.Settings>
-    <Modal isVisible={modalIsOpen}>
+    <Modal isVisible={modalIsOpen} >
       <S.ModalContainer>
         <S.ModalTitle>
           Configurações
@@ -56,11 +56,22 @@ export const Settings = ({ handleChangeTheme, currentTheme = 'dark', hasUserPhot
             />
           </S.FormGroup>
           <S.FormGroup style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-            <S.Label>Fonte</S.Label>
-            
+            <S.Label>Tamanho da fonte</S.Label>
+            <Slider
+              style={{width: 200, height: 40}}
+              minimumValue={0}
+              maximumValue={1}
+              minimumTrackTintColor="#ce4848"
+              maximumTrackTintColor="#000000"
+            />
           </S.FormGroup>
         </S.ModalBody>
       </S.ModalContainer>
+      <S.CloseButton onPress={() => setModalIsOpen(false)}>
+        <S.CloseButtonText>
+          Fechar
+        </S.CloseButtonText>
+      </S.CloseButton>
     </Modal>
   </S.Container>
 }

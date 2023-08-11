@@ -25,6 +25,8 @@ export interface userDetailsProps {
 }
 
 export default function App() {
+  const [hiddenUserPhoto, setHiddenUserPhoto] = useState<boolean>(false);
+  const [theme, setTheme] = useState<string>('light');
   const [userName, setUserName] = useState<string>('Maikaodev');
   const [userDetails, setUserDetails] = useState<userDetailsProps>();
 
@@ -32,7 +34,7 @@ export default function App() {
 
   const handleChangeSearch = (value: string) => setSearchValue(value || '');
 
-  const handleChangeUserName = (newUserName) => setUserName(newUserName);
+  const handleChangeUserName = (newUserName: string) => setUserName(newUserName);
 
   const loadData = async () => {
     const response = await Api.getProfile(userName);
@@ -48,58 +50,72 @@ export default function App() {
     }
   }, [userName]);
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar style="auto" />
+  const handleChangeTheme = (value) => {
+    setTheme(value);
+  }
 
+  const handleHiddenUserPhoto = () => {
+    setHiddenUserPhoto(!hiddenUserPhoto);
+  }
+
+  return (
+    <SafeAreaView style={[styles.container, theme === 'dark' && { backgroundColor: '#282c34' }]}>
+      <StatusBar style="auto" />
       <S.ContainerHeader>
-        <S.AppName>Connect Ifal</S.AppName>
+        <S.AppName style={theme === 'dark' && { color: '#fff' }}>Connect Ifal</S.AppName>
         <S.SearchContainer>
           <S.TextInput
             placeholder="Buscar usuário (github)"
             onChangeText={handleChangeSearch}
+            placeholderTextColor={theme === 'dark' ? "#fff" : "#000"}
           />
           <S.SearchAction onPress={() => handleChangeUserName(searchValue)}>
-            <Ionicons name="ios-search" size={24} color="#000" />
+            <Ionicons name="ios-search" size={24} color={theme === 'dark' ? '#fff' : "#000"} />
           </S.SearchAction>
         </S.SearchContainer>
       </S.ContainerHeader>
 
       <S.Container>
         <S.Content>
-          <S.photoPerfil
-            source={{ uri: userDetails.avatar_url as string }}
+          {!hiddenUserPhoto && <S.photoPerfil
+            source={{ uri: userDetails?.avatar_url as string }}
             alt="maikaodev"
-          />
+          />}
           <S.ContentName>
-            <S.username>{userDetails.name}</S.username>
-            <S.nickname>{userDetails.login}</S.nickname>
+            <S.username style={theme === 'dark' && { color: '#fff' }}>{userDetails?.name}</S.username>
+            <S.nickname style={theme === 'dark' && { color: '#fff' }}>{userDetails?.login}</S.nickname>
           </S.ContentName>
         </S.Content>
         <S.contentBio>
-          <S.bio>{userDetails.bio}</S.bio>
+          <S.bio style={theme === 'dark' && { color: '#fff' }}>{userDetails?.bio}</S.bio>
 
-          {userDetails.location && (
-            <SocialMediaItem text={userDetails.location}>
-              <EvilIcons name="location" size={24} color="black" />
+          {userDetails?.location && (
+            <SocialMediaItem text={userDetails?.location} style={theme === 'dark' && { color: '#fff' }}>
+              <EvilIcons name="location" size={24} color={theme === 'dark' ? '#fff' : '#000'} />
             </SocialMediaItem>
           )}
 
-          {userDetails.twitter_username && (
-            <SocialMediaItem text={userDetails.twitter_username}>
-              <AntDesign name="twitter" size={24} color="black" />
+          {userDetails?.twitter_username && (
+            <SocialMediaItem text={userDetails?.twitter_username} style={theme === 'dark' && { color: '#fff' }}>
+              <AntDesign name="twitter" size={24} color={theme === 'dark' ? '#fff' : '#000'} />
             </SocialMediaItem>
           )}
 
-          {userDetails.blog && (
-            <SocialMediaItem text={userDetails.blog}>
-              <AntDesign name="link" size={18} color="black" />
+          {userDetails?.blog && (
+            <SocialMediaItem text={userDetails?.blog} style={theme === 'dark' && { color: '#fff' }}>
+              <AntDesign name="link" size={18} color={theme === 'dark' ? '#fff' : '#000'} />
             </SocialMediaItem>
           )}
         </S.contentBio>
       </S.Container>
 
-      <Settings />
+      <Settings
+        handleChangeTheme={handleChangeTheme}
+        currentTheme={theme}
+        handleHiddenUserPhoto={handleHiddenUserPhoto}
+        hasUserPhoto={!hiddenUserPhoto}
+      
+      />
     </SafeAreaView>
   );
 }
