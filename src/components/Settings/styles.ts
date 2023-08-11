@@ -25,6 +25,31 @@ export const Title = styled.Text`
 
 export const SettingAction = styled.TouchableOpacity``;
 
-export const Modal = styled.Modal`
-  background-color: red;
+export const ModalContainer = styled.View`
+  flex: 1;
+  background-color: #fff;
+
+  border-radius: 8px;
+
+  padding: 16px;
+`;
+
+export const ModalTitle = styled.Text`
+  font-size: 24px;
+  font-weight: bold;
+
+  text-align: center;
+`;
+
+export const ModalBody = styled.View`
+  flex: 1;
+`;
+
+export const FormGroup = styled.View`
+  margin-top: 16px;
+`;
+
+export const Label = styled.Text`
+  font-size: 16px;
+  margin-bottom: 8px;
 `;

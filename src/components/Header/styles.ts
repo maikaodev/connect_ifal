@@ -17,7 +17,7 @@ export const AppName = styled.Text`
 export const SearchContainer = styled.View`
   flex-direction: row;
   align-items: center;
-  gap: 8;
+  gap: 8px;
 `;
 
 export const TextInput = styled.TextInput`
