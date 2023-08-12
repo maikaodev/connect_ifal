@@ -15,3 +15,8 @@ export interface SocialMediaItemProps {
   style?: any;
 }
 
+export interface SnackbarProps {
+  description: string;
+  visible: boolean;
+  fn: Dispatch<SetStateAction<boolean>>;
+}
