@@ -89,3 +89,13 @@ export const Button = styled.TouchableOpacity`
   padding: 16px;
 `;
 
+export const Footer = styled.View`
+  flex: 1;
+
+  margin-bottom: 8px;
+`;
+
+export const Text = styled.Text`
+  font-size: 18px;
+`;
+

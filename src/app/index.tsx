@@ -210,6 +210,9 @@ export default function App() {
         visible={isVisible}
         fn={setIsVisible}
       />
+      <S.Footer>
+        <S.Text>Desenvolvido por @maikaodev & @jhonatat</S.Text>
+      </S.Footer>
     </SafeAreaView>
   );
 }
