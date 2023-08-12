@@ -7,3 +7,10 @@ export interface userDetailsProps {
   twitter_username: string;
   blog: string;
 }
+
+export interface DataProps {
+  name: string;
+  description: string | null;
+  language: string;
+}
+

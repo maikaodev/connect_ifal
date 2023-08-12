@@ -23,7 +23,12 @@ export const Title = styled.Text`
   font-size: 16px;
 `;
 
-export const SettingAction = styled.TouchableOpacity``;
+export const SettingAction = styled.TouchableOpacity`
+  flex-direction: row;
+  align-items: center;
+
+  gap: 8px;
+`;
 
 export const ModalContainer = styled.View`
   flex: 1;
@@ -71,3 +76,4 @@ export const CloseButtonText = styled.Text`
 `;
 
 export const ContainerSlider = styled.View``;
+

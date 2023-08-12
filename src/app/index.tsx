@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Api } from '../src/api/communication';
+import { Api } from '../api/communication';
 
-import { userDetailsProps } from '../src/@types/pages';
+import { userDetailsProps } from '../@types/pages';
 
 import * as S from './styles';
 
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { EvilIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import { Snackbar, SocialMediaItem, Settings } from '../src/components';
+import { Snackbar, SocialMediaItem, Settings } from '../components';
+import { Link } from 'expo-router';
 
 export default function App() {
   const [hiddenUserPhoto, setHiddenUserPhoto] = useState<boolean>(false);
@@ -21,17 +22,25 @@ export default function App() {
   const [userName, setUserName] = useState<string>('Maikaodev');
   const [userDetails, setUserDetails] = useState<userDetailsProps>();
   const [textDescription, setDescription] = useState<string>('');
-  const [isVisible, setIsVisible] = useState<boolean>(true);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>('');
 
   const handleChangeSearch = (value: string) => setSearchValue(value || '');
 
   const handleChangeUserName = (newUserName: string) => {
+    if (!userName) {
+      setDescription('Digite o nome do usuário');
+      setIsVisible(true);
+      return;
+    }
+
     setUserName(newUserName);
   };
 
   const loadData = async () => {
-    const response: userDetailsProps = await Api.getProfile(userName);
+    const response: userDetailsProps = await Api.getProfile(
+      `https://api.github.com/users/${userName}`,
+    );
 
     if (!response.name) {
       setDescription('Usuário não foi encontrado');
@@ -59,12 +68,7 @@ export default function App() {
   };
 
   return (
-    <SafeAreaView
-      style={[
-        styles.container,
-        theme === 'dark' && { backgroundColor: '#282c34' },
-      ]}
-    >
+    <S.Container style={theme === 'dark' && { backgroundColor: '#282c34' }}>
       <StatusBar style="auto" />
 
       <S.ContainerHeader>
@@ -96,12 +100,13 @@ export default function App() {
         </S.SearchContainer>
       </S.ContainerHeader>
 
-      <S.Container>
+      <S.ContainerMain>
         <S.Content>
           {!hiddenUserPhoto && (
             <S.photoPerfil
               source={{ uri: userDetails?.avatar_url }}
               alt="maikaodev"
+              style={{ borderWidth: 2, borderColor: 'grey' }}
             />
           )}
           <S.ContentName>
@@ -123,6 +128,7 @@ export default function App() {
             </S.nickname>
           </S.ContentName>
         </S.Content>
+
         <S.contentBio>
           <S.bio
             style={[
@@ -180,8 +186,19 @@ export default function App() {
               />
             </SocialMediaItem>
           )}
+          <Link href={`/repositories/${userName}`} asChild>
+            <S.Button style={theme === 'dark' && { backgroundColor: '#fff' }}>
+              <S.TextButton
+                style={{
+                  color: theme === 'dark' ? '#000' : '#fff',
+                }}
+              >
+                Repositórios
+              </S.TextButton>
+            </S.Button>
+          </Link>
         </S.contentBio>
-      </S.Container>
+      </S.ContainerMain>
 
       <Settings
         handleChangeTheme={handleChangeTheme}
@@ -196,16 +213,12 @@ export default function App() {
         visible={isVisible}
         fn={setIsVisible}
       />
-    </SafeAreaView>
+      <S.Footer>
+        <S.Text style={theme === 'dark' && { color: '#fff' }}>
+          Desenvolvido por @maikaodev & @jhonatat
+        </S.Text>
+      </S.Footer>
+    </S.Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
