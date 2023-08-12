@@ -27,6 +27,12 @@ export default function App() {
   const handleChangeSearch = (value: string) => setSearchValue(value || '');
 
   const handleChangeUserName = (newUserName: string) => {
+    if (!userName) {
+      setDescription('Digite o nome do usuário');
+      setIsVisible(true);
+      return;
+    }
+
     setUserName(newUserName);
   };
 
