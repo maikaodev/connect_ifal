@@ -39,6 +39,7 @@ export default function Repositories() {
           <ScrollView showsVerticalScrollIndicator={false}>
             {data.map(({ name, description, language }) => (
               <Repository
+                key={name}
                 name={name}
                 description={description}
                 language={language}
