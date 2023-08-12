@@ -6,23 +6,15 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Api } from '../src/api/communication';
 import { Settings } from '../src/components/Settings';
 
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { EvilIcons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-
-import * as S from './styles';
+import { userDetailsProps } from '../src/@types/pages';
 
 import { SocialMediaItem } from '../src/components';
 
-export interface userDetailsProps {
-  avatar_url: string;
-  name: string;
-  login: string;
-  location: string;
-  bio: string;
-  twitter_username: string;
-  blog: string;
-}
+import * as S from './styles';
+
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { EvilIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 export default function App() {
   const [hiddenUserPhoto, setHiddenUserPhoto] = useState<boolean>(false);

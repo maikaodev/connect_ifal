@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { Switch } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { Picker } from '@react-native-picker/picker';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import Modal from 'react-native-modal';
-import * as S from './styles';
 
 import { SettingsProps } from '../../@types/components';
+
+import * as S from './styles';
+
+import Ionicons from '@expo/vector-icons/Ionicons';
+import Modal from 'react-native-modal';
 
 export const Settings = ({
   handleChangeTheme,
@@ -110,6 +112,7 @@ export const Settings = ({
             </S.FormGroup>
           </S.ModalBody>
         </S.ModalContainer>
+
         <S.CloseButton onPress={() => setModalIsOpen(false)}>
           <S.CloseButtonText>Fechar</S.CloseButtonText>
         </S.CloseButton>
