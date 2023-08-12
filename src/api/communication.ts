@@ -1,19 +1,18 @@
-import axios from 'axios'
+import axios from 'axios';
 
 export class Api {
-  static async getProfile(username: string) {
+  static async getProfile(url: string) {
     try {
-      const response = await axios.get(
-        `https://api.github.com/users/${username}`
-      )
+      const response = await axios.get(url);
       if (!response || !response.data) {
-        throw new Error('Erro ao buscar informações do usuário.')
+        throw new Error('Erro ao buscar informações do usuário.');
       }
 
-      return response?.data
+      return response?.data;
     } catch (error) {
-      console.log('Error', error)
-      return {}
+      console.log('Error', error);
+      return {};
     }
   }
 }
+

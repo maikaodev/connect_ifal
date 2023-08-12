@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Api } from '../src/api/communication';
+import { Api } from '../api/communication';
 
-import { userDetailsProps } from '../src/@types/pages';
+import { userDetailsProps } from '../@types/pages';
 
 import * as S from './styles';
 
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { EvilIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import { Snackbar, SocialMediaItem, Settings } from '../src/components';
+import { Snackbar, SocialMediaItem, Settings } from '../components';
+import { Link } from 'expo-router';
 
 export default function App() {
   const [hiddenUserPhoto, setHiddenUserPhoto] = useState<boolean>(false);
@@ -21,7 +22,7 @@ export default function App() {
   const [userName, setUserName] = useState<string>('Maikaodev');
   const [userDetails, setUserDetails] = useState<userDetailsProps>();
   const [textDescription, setDescription] = useState<string>('');
-  const [isVisible, setIsVisible] = useState<boolean>(true);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>('');
 
   const handleChangeSearch = (value: string) => setSearchValue(value || '');
@@ -37,7 +38,9 @@ export default function App() {
   };
 
   const loadData = async () => {
-    const response: userDetailsProps = await Api.getProfile(userName);
+    const response: userDetailsProps = await Api.getProfile(
+      `https://api.github.com/users/${userName}`,
+    );
 
     if (!response.name) {
       setDescription('Usuário não foi encontrado');
@@ -186,6 +189,11 @@ export default function App() {
               />
             </SocialMediaItem>
           )}
+          <Link href={`/repositories/${userName}`} asChild>
+            <S.Button>
+              <S.TextButton>Repositórios</S.TextButton>
+            </S.Button>
+          </Link>
         </S.contentBio>
       </S.Container>
 

@@ -65,11 +65,27 @@ export const photoPerfil = styled.Image`
   border: 2px solid grey;
 `;
 
-export const contentBio = styled.View``;
+export const contentBio = styled.View`
+  gap: 16px;
+`;
 
 export const bio = styled.Text`
   font-size: 18px;
 
   margin-top: 8px;
+`;
+
+export const TextButton = styled.Text`
+  color: #ffffff;
+`;
+
+export const Button = styled.TouchableOpacity`
+  width: 100px;
+
+  background-color: #222;
+
+  border-radius: 6px;
+
+  padding: 16px;
 `;
 
