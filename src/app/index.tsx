@@ -68,12 +68,7 @@ export default function App() {
   };
 
   return (
-    <SafeAreaView
-      style={[
-        styles.container,
-        theme === 'dark' && { backgroundColor: '#282c34' },
-      ]}
-    >
+    <S.Container style={theme === 'dark' && { backgroundColor: '#282c34' }}>
       <StatusBar style="auto" />
 
       <S.ContainerHeader>
@@ -105,12 +100,13 @@ export default function App() {
         </S.SearchContainer>
       </S.ContainerHeader>
 
-      <S.Container>
+      <S.ContainerMain>
         <S.Content>
           {!hiddenUserPhoto && (
             <S.photoPerfil
               source={{ uri: userDetails?.avatar_url }}
               alt="maikaodev"
+              style={{ borderWidth: 2, borderColor: 'grey' }}
             />
           )}
           <S.ContentName>
@@ -132,6 +128,7 @@ export default function App() {
             </S.nickname>
           </S.ContentName>
         </S.Content>
+
         <S.contentBio>
           <S.bio
             style={[
@@ -190,12 +187,18 @@ export default function App() {
             </SocialMediaItem>
           )}
           <Link href={`/repositories/${userName}`} asChild>
-            <S.Button>
-              <S.TextButton>Repositórios</S.TextButton>
+            <S.Button style={theme === 'dark' && { backgroundColor: '#fff' }}>
+              <S.TextButton
+                style={{
+                  color: theme === 'dark' ? '#000' : '#fff',
+                }}
+              >
+                Repositórios
+              </S.TextButton>
             </S.Button>
           </Link>
         </S.contentBio>
-      </S.Container>
+      </S.ContainerMain>
 
       <Settings
         handleChangeTheme={handleChangeTheme}
@@ -211,18 +214,11 @@ export default function App() {
         fn={setIsVisible}
       />
       <S.Footer>
-        <S.Text>Desenvolvido por @maikaodev & @jhonatat</S.Text>
+        <S.Text style={theme === 'dark' && { color: '#fff' }}>
+          Desenvolvido por @maikaodev & @jhonatat
+        </S.Text>
       </S.Footer>
-    </SafeAreaView>
+    </S.Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 

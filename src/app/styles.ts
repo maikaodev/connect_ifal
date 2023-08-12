@@ -1,5 +1,16 @@
 import styled from 'styled-components/native';
 
+export const Container = styled.SafeAreaView`
+  flex: 1;
+
+  background-color: #eeeeee;
+
+  align-items: center;
+  justify-content: center;
+
+  padding-top: 24px;
+`;
+
 export const ContainerHeader = styled.View`
   width: 100%;
 
@@ -31,7 +42,7 @@ export const TextInput = styled.TextInput`
 
 export const SearchAction = styled.TouchableOpacity``;
 
-export const Container = styled.View`
+export const ContainerMain = styled.View`
   flex: 10;
   width: 100%;
 
@@ -61,8 +72,6 @@ export const photoPerfil = styled.Image`
   height: 110px;
 
   border-radius: 100px;
-
-  border: 2px solid grey;
 `;
 
 export const contentBio = styled.View`
@@ -77,10 +86,12 @@ export const bio = styled.Text`
 
 export const TextButton = styled.Text`
   color: #ffffff;
+
+  font-size: 18px;
 `;
 
 export const Button = styled.TouchableOpacity`
-  width: 100px;
+  width: 120px;
 
   background-color: #222;
 
