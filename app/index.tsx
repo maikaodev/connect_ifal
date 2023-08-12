@@ -4,25 +4,15 @@ import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Api } from '../src/api/communication';
-import { Settings } from '../src/components/Settings';
+
+import { userDetailsProps } from '../src/@types/pages';
+
+import * as S from './styles';
 
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { EvilIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-
-import * as S from './styles';
-
-import { SocialMediaItem } from '../src/components';
-
-export interface userDetailsProps {
-  avatar_url: string;
-  name: string;
-  login: string;
-  location: string;
-  bio: string;
-  twitter_username: string;
-  blog: string;
-}
+import { Snackbar, SocialMediaItem, Settings } from '../src/components';
 
 export default function App() {
   const [hiddenUserPhoto, setHiddenUserPhoto] = useState<boolean>(false);
@@ -30,16 +20,24 @@ export default function App() {
   const [fontSize, setFontSize] = useState<number>(1);
   const [userName, setUserName] = useState<string>('Maikaodev');
   const [userDetails, setUserDetails] = useState<userDetailsProps>();
-
+  const [textDescription, setDescription] = useState<string>('');
+  const [isVisible, setIsVisible] = useState<boolean>(true);
   const [searchValue, setSearchValue] = useState<string>('');
 
   const handleChangeSearch = (value: string) => setSearchValue(value || '');
 
-  const handleChangeUserName = (newUserName: string) =>
+  const handleChangeUserName = (newUserName: string) => {
     setUserName(newUserName);
+  };
 
   const loadData = async () => {
-    const response = await Api.getProfile(userName);
+    const response: userDetailsProps = await Api.getProfile(userName);
+
+    if (!response.name) {
+      setDescription('Usuário não foi encontrado');
+      setIsVisible(true);
+      return;
+    }
 
     if (response) {
       setUserDetails(response);
@@ -68,6 +66,7 @@ export default function App() {
       ]}
     >
       <StatusBar style="auto" />
+
       <S.ContainerHeader>
         <S.AppName
           style={[
@@ -81,6 +80,7 @@ export default function App() {
           <S.TextInput
             placeholder="Buscar usuário (github)"
             onChangeText={handleChangeSearch}
+            value={searchValue}
             placeholderTextColor={theme === 'dark' ? '#fff' : '#000'}
             style={{
               borderColor: theme === 'dark' ? '#fff' : '#000',
@@ -100,7 +100,7 @@ export default function App() {
         <S.Content>
           {!hiddenUserPhoto && (
             <S.photoPerfil
-              source={{ uri: userDetails?.avatar_url as string }}
+              source={{ uri: userDetails?.avatar_url }}
               alt="maikaodev"
             />
           )}
@@ -190,6 +190,11 @@ export default function App() {
         hasUserPhoto={!hiddenUserPhoto}
         setFontSize={setFontSize}
         fontSize={fontSize}
+      />
+      <Snackbar
+        description={textDescription}
+        visible={isVisible}
+        fn={setIsVisible}
       />
     </SafeAreaView>
   );

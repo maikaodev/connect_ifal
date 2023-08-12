@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, ReactNode, SetStateAction } from 'react';
 
 export interface SettingsProps {
   handleChangeTheme: (value: string) => void;
@@ -9,3 +9,14 @@ export interface SettingsProps {
   setFontSize: Dispatch<SetStateAction<number>>;
 }
 
+export interface SocialMediaItemProps {
+  children: ReactNode;
+  text: string;
+  style?: any;
+}
+
+export interface SnackbarProps {
+  description: string;
+  visible: boolean;
+  fn: Dispatch<SetStateAction<boolean>>;
+}
