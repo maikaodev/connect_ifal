@@ -25,19 +25,20 @@ export const Settings = ({
       <S.Divider />
 
       <S.Settings>
-        <S.Title
-          style={[
-            currentTheme === 'dark' && { color: '#fff' },
-            { fontSize: 24 * fontSize },
-          ]}
-        >
-          Configurações
-        </S.Title>
         <S.SettingAction onPress={() => setModalIsOpen(true)}>
+          <S.Title
+            style={[
+              currentTheme === 'dark' && { color: '#fff' },
+              { fontSize: 24 * fontSize },
+            ]}
+          >
+            Configurações
+          </S.Title>
           <Ionicons
             name="ios-settings"
             size={fontSize * 20}
             color={currentTheme === 'dark' ? '#fff' : '#000'}
+            style={{ marginTop: 3 }}
           />
         </S.SettingAction>
       </S.Settings>
