@@ -27,6 +27,7 @@ export interface userDetailsProps {
 export default function App() {
   const [hiddenUserPhoto, setHiddenUserPhoto] = useState<boolean>(false);
   const [theme, setTheme] = useState<string>('light');
+  const [fontSize, setFontSize] = useState<number>(1);
   const [userName, setUserName] = useState<string>('Maikaodev');
   const [userDetails, setUserDetails] = useState<userDetailsProps>();
 
@@ -34,7 +35,8 @@ export default function App() {
 
   const handleChangeSearch = (value: string) => setSearchValue(value || '');
 
-  const handleChangeUserName = (newUserName: string) => setUserName(newUserName);
+  const handleChangeUserName = (newUserName: string) =>
+    setUserName(newUserName);
 
   const loadData = async () => {
     const response = await Api.getProfile(userName);
@@ -52,58 +54,130 @@ export default function App() {
 
   const handleChangeTheme = (value) => {
     setTheme(value);
-  }
+  };
 
   const handleHiddenUserPhoto = () => {
     setHiddenUserPhoto(!hiddenUserPhoto);
-  }
+  };
 
   return (
-    <SafeAreaView style={[styles.container, theme === 'dark' && { backgroundColor: '#282c34' }]}>
+    <SafeAreaView
+      style={[
+        styles.container,
+        theme === 'dark' && { backgroundColor: '#282c34' },
+      ]}
+    >
       <StatusBar style="auto" />
       <S.ContainerHeader>
-        <S.AppName style={theme === 'dark' && { color: '#fff' }}>Connect Ifal</S.AppName>
+        <S.AppName
+          style={[
+            theme === 'dark' && { color: '#fff' },
+            { fontSize: 24 * fontSize },
+          ]}
+        >
+          Connect Ifal
+        </S.AppName>
         <S.SearchContainer>
           <S.TextInput
             placeholder="Buscar usuário (github)"
             onChangeText={handleChangeSearch}
-            placeholderTextColor={theme === 'dark' ? "#fff" : "#000"}
+            placeholderTextColor={theme === 'dark' ? '#fff' : '#000'}
+            style={{
+              borderColor: theme === 'dark' ? '#fff' : '#000',
+            }}
           />
           <S.SearchAction onPress={() => handleChangeUserName(searchValue)}>
-            <Ionicons name="ios-search" size={24} color={theme === 'dark' ? '#fff' : "#000"} />
+            <Ionicons
+              name="ios-search"
+              size={fontSize * 20}
+              color={theme === 'dark' ? '#fff' : '#000'}
+            />
           </S.SearchAction>
         </S.SearchContainer>
       </S.ContainerHeader>
 
       <S.Container>
         <S.Content>
-          {!hiddenUserPhoto && <S.photoPerfil
-            source={{ uri: userDetails?.avatar_url as string }}
-            alt="maikaodev"
-          />}
+          {!hiddenUserPhoto && (
+            <S.photoPerfil
+              source={{ uri: userDetails?.avatar_url as string }}
+              alt="maikaodev"
+            />
+          )}
           <S.ContentName>
-            <S.username style={theme === 'dark' && { color: '#fff' }}>{userDetails?.name}</S.username>
-            <S.nickname style={theme === 'dark' && { color: '#fff' }}>{userDetails?.login}</S.nickname>
+            <S.username
+              style={[
+                theme === 'dark' && { color: '#fff' },
+                { fontSize: 24 * fontSize },
+              ]}
+            >
+              {userDetails?.name}
+            </S.username>
+            <S.nickname
+              style={[
+                theme === 'dark' && { color: '#fff' },
+                { fontSize: 24 * fontSize },
+              ]}
+            >
+              {userDetails?.login}
+            </S.nickname>
           </S.ContentName>
         </S.Content>
         <S.contentBio>
-          <S.bio style={theme === 'dark' && { color: '#fff' }}>{userDetails?.bio}</S.bio>
+          <S.bio
+            style={[
+              theme === 'dark' && { color: '#fff' },
+              { fontSize: 24 * fontSize },
+            ]}
+          >
+            {userDetails?.bio}
+          </S.bio>
 
           {userDetails?.location && (
-            <SocialMediaItem text={userDetails?.location} style={theme === 'dark' && { color: '#fff' }}>
-              <EvilIcons name="location" size={24} color={theme === 'dark' ? '#fff' : '#000'} />
+            <SocialMediaItem
+              text={userDetails?.location}
+              style={[
+                theme === 'dark' && { color: '#fff' },
+                { fontSize: 24 * fontSize },
+              ]}
+            >
+              <EvilIcons
+                name="location"
+                size={fontSize * 24}
+                color={theme === 'dark' ? '#fff' : '#000'}
+              />
             </SocialMediaItem>
           )}
 
           {userDetails?.twitter_username && (
-            <SocialMediaItem text={userDetails?.twitter_username} style={theme === 'dark' && { color: '#fff' }}>
-              <AntDesign name="twitter" size={24} color={theme === 'dark' ? '#fff' : '#000'} />
+            <SocialMediaItem
+              text={userDetails?.twitter_username}
+              style={[
+                theme === 'dark' && { color: '#fff' },
+                { fontSize: 24 * fontSize },
+              ]}
+            >
+              <AntDesign
+                name="twitter"
+                size={fontSize * 24}
+                color={theme === 'dark' ? '#fff' : '#000'}
+              />
             </SocialMediaItem>
           )}
 
           {userDetails?.blog && (
-            <SocialMediaItem text={userDetails?.blog} style={theme === 'dark' && { color: '#fff' }}>
-              <AntDesign name="link" size={18} color={theme === 'dark' ? '#fff' : '#000'} />
+            <SocialMediaItem
+              text={userDetails?.blog}
+              style={[
+                theme === 'dark' && { color: '#fff' },
+                { fontSize: 24 * fontSize },
+              ]}
+            >
+              <AntDesign
+                name="link"
+                size={18}
+                color={theme === 'dark' ? '#fff' : '#000'}
+              />
             </SocialMediaItem>
           )}
         </S.contentBio>
@@ -114,7 +188,8 @@ export default function App() {
         currentTheme={theme}
         handleHiddenUserPhoto={handleHiddenUserPhoto}
         hasUserPhoto={!hiddenUserPhoto}
-      
+        setFontSize={setFontSize}
+        fontSize={fontSize}
       />
     </SafeAreaView>
   );

@@ -57,13 +57,17 @@ export const Label = styled.Text`
 export const CloseButton = styled.TouchableOpacity`
   background-color: #ce4848;
 
+  padding: 16px;
+
   align-items: center;
   justify-content: center;
 `;
 
 export const CloseButtonText = styled.Text`
   font-size: 20px;
-  Font-weight: bold;
-  margin-bottom: 8px;
+  font-weight: bold;
+
   color: #fff;
 `;
+
+export const ContainerSlider = styled.View``;
